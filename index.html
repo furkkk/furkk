@@ -6,6 +6,7 @@
   <title>Tech Login</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    /* Your full CSS remains unchanged */
     :root {
       --bg-dark: #000;
       --bg-light: #fff;
@@ -226,8 +227,6 @@
     <input type="password" id="password" placeholder="Password" />
     <div><input type="checkbox" id="verifyBot" /> I'm not a robot</div>
     <button onclick="login()">Login</button>
-
-    <!-- Instagram Button Added Here -->
     <a href="https://www.instagram.com/furkaaannn_.0?igsh=dmF1MTQyZDR5cmRw" target="_blank" class="instagram-btn">
       <i class="fab fa-instagram"></i> Follow on Instagram
     </a>
@@ -260,6 +259,9 @@
   <span id="errorMessage">Error</span>
   <span class="close-btn" onclick="hideErrorPopup()">&times;</span>
 </div>
+
+<!-- Click Sound Audio -->
+<audio id="clickSound" src="clicksound.mp3" preload="auto"></audio>
 
 <script>
   const canvas = document.querySelector(".matrix-bg");
@@ -356,6 +358,15 @@
     link.href = canvas.toDataURL();
     link.click();
   }
+
+  // Play sound on all button or clickable elements
+  const clickSound = document.getElementById("clickSound");
+  document.querySelectorAll("button, .profile-menu-btn, .dark-toggle, .instagram-btn").forEach(el => {
+    el.addEventListener("click", () => {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(err => console.warn("Click sound error:", err));
+    });
+  });
 </script>
 </body>
 </html>
