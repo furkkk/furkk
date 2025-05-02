@@ -6,7 +6,7 @@
   <title>Tech Login</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* Your full CSS remains unchanged */
+    /* Your existing CSS remains unchanged */
     :root {
       --bg-dark: #000;
       --bg-light: #fff;
@@ -99,9 +99,20 @@
       position: absolute;
       top: 20px;
       right: 20px;
+      left: 20px; /* Added left to contain the new button */
       display: flex;
       align-items: center;
+      justify-content: space-between; /* Distribute space between elements */
       gap: 10px;
+    }
+
+    .chat-live-btn {
+      background: #4CAF50; /* Green color for chat button */
+      color: white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     .profile-menu-btn {
@@ -216,6 +227,43 @@
       from { box-shadow: 0 0 10px #ff0080; }
       to { box-shadow: 0 0 25px #ff0080; }
     }
+
+    /* CSS for the new chat page */
+    .chat-page {
+      position: fixed;
+      top: 0;
+      left: -100%; /* Initially hidden to the left */
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      z-index: 1001; /* Higher than the dashboard */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: left 0.5s ease-in-out;
+    }
+
+    .chat-page.active {
+      left: 0; /* Slide in */
+    }
+
+    .chat-page-content {
+      text-align: center;
+    }
+
+    .close-chat-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -238,12 +286,15 @@
 
 <div class="dashboard" id="dashboardPage">
   <div class="top-bar">
-    <div class="dark-toggle" onclick="toggleDarkMode()">Toggle Mode</div>
-    <div class="profile-menu-btn" onclick="toggleProfilePanel()">Account</div>
-    <div class="profile-panel" id="profilePanel">
-      <p><strong>Username:</strong> <span id="savedUsername"></span></p>
-      <p><strong>Password:</strong> <span id="savedPassword"></span></p>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+    <button class="chat-live-btn" onclick="openChat()">Chat Live</button>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div class="dark-toggle" onclick="toggleDarkMode()">Toggle Mode</div>
+      <div class="profile-menu-btn" onclick="toggleProfilePanel()">Account</div>
+      <div class="profile-panel" id="profilePanel">
+        <p><strong>Username:</strong> <span id="savedUsername"></span></p>
+        <p><strong>Password:</strong> <span id="savedPassword"></span></p>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
     </div>
   </div>
   <h1>Welcome, <span id="displayUsername"></span>!</h1>
@@ -260,7 +311,14 @@
   <span class="close-btn" onclick="hideErrorPopup()">&times;</span>
 </div>
 
-<!-- Click Sound Audio -->
+<div class="chat-page" id="chatPage">
+  <button class="close-chat-btn" onclick="closeChat()">Close Chat</button>
+  <div class="chat-page-content">
+    <h2>Live Chat</h2>
+    <p>This is where the live chat will be implemented.</p>
+    </div>
+</div>
+
 <audio id="clickSound" src="clicksound.mp3" preload="auto"></audio>
 
 <script>
@@ -359,9 +417,17 @@
     link.click();
   }
 
+  function openChat() {
+    document.getElementById("chatPage").classList.add("active");
+  }
+
+  function closeChat() {
+    document.getElementById("chatPage").classList.remove("active");
+  }
+
   // Play sound on all button or clickable elements
   const clickSound = document.getElementById("clickSound");
-  document.querySelectorAll("button, .profile-menu-btn, .dark-toggle, .instagram-btn").forEach(el => {
+  document.querySelectorAll("button, .profile-menu-btn, .dark-toggle, .instagram-btn, .chat-live-btn, .close-chat-btn").forEach(el => {
     el.addEventListener("click", () => {
       clickSound.currentTime = 0;
       clickSound.play().catch(err => console.warn("Click sound error:", err));
@@ -369,4 +435,6 @@
   });
 </script>
 </body>
-</html>
+  </html
+
+ 
